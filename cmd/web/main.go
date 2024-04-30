@@ -99,6 +99,11 @@ func openDB(dsn string)(*sql.DB, error){
 	if err != nil{
 		return nil, err 
 	}
+	defer func() {
+		if err != nil {
+			db.Close()
+		}
+	}()
 
 	if err = db.Ping(); err != nil{
 		return nil, err 
